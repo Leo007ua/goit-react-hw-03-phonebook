@@ -5,15 +5,20 @@ import Wraper from './Wraper/Wraper';
 const INITIAL_STATE = {
   contacts: [],
   filter: '',
-};
+}
 
 export class App extends Component {
   state = {
     ...INITIAL_STATE,
-  };
+  }
+
   componentDidMount() {
-    const parsedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    const stringifieldContacts = localStorage.getItem('contacts')
+    const parsedContacts = JSON.parse(stringifieldContacts) || [];
+    // const parsedContacts = JSON.parse(stringifieldcontacts) ?? [];
     this.setState({ contacts: parsedContacts });
+   
+    
   }
 
   componentDidUpdate(_, prevState) {
@@ -50,9 +55,9 @@ export class App extends Component {
   };
 
   onRemoveContact = contactId => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== contactId),
-    });
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   render() {
